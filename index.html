@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+</head>
+<body>
+    Add to list:
+    <span id="errorMsg"></span><br><br>
+    <input id="itemname" type="text" name="text" placeholder="Add to list">
+    <input id="addBtn" type="button" name="addBtn" value="Add">
+    <input id="clearBtn" type="button" name="clearBtn" value="Clear">
+    <ul id="root"></ul>
+    <script>
+        let confirmClear = false;
+
+        const message = document.getElementById("errorMsg");
+        const addToListBtn = document.getElementById("addBtn");
+        const clearBtn = document.getElementById("clearBtn");
+        const root = document.getElementById("root");
+
+        function showMsg(colorName, messageText){
+            message.style.color = colorName;
+            message.textContent = messageText;
+            return;
+        }
+
+        function resetClearState(){
+            confirmClear = false;
+            return;
+        }
+
+        addToListBtn.addEventListener("click", (event) => {
+
+            const listItemName = document.getElementById("itemname").value.trim();
+
+            if(confirmClear){
+                resetClearState();
+            }
+
+            if(!listItemName){
+                showMsg("red", "Add an Item to list");
+                return;
+            }
+
+            const listItem = document.createElement('li');
+            listItem.textContent = listItemName;
+            listItem.title = "Edit";
+            listItem.style.cursor = "pointer";
+            root.append(listItem);
+
+            showMsg("green", `Added Item: ${listItemName}`);
+
+            document.getElementById("itemname").value = "";
+            return;
+        });
+
+        clearBtn.addEventListener("click", (event) => {
+            if(!confirmClear){
+                showMsg("blue", "Are you sure to clear the list? (Click again to proceed!)");
+                confirmClear = true;
+                return;
+            }
+
+            while(root.firstChild){
+                root.removeChild(root.firstChild);
+            }
+            resetClearState();
+            showMsg("green", "Cleared!");
+            return;
+        });
+    </script>
+</body>
+</html>
