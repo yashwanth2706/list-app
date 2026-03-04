@@ -11,24 +11,104 @@
     <input id="itemname" type="text" name="text" placeholder="Add to list">
     <input id="addBtn" type="button" name="addBtn" value="Add">
     <input id="clearBtn" type="button" name="clearBtn" value="Clear">
-    <ul id="root"></ul>
+    <ul id="root">
+        <li id="editRow" class="hide-edit-mode">
+            <input id="editInput" type="text" name="editModeTextField">
+            <button id="updateBtn">Update</button>
+            <button id="cancelBtn">Cancel</button>
+        </li>
+    </ul>
+    <style>
+        .hide-edit-mode{
+            display: none;
+        }
+    </style>
     <script>
-        let confirmClear = false;
+        let confirmClear = false;       //  Not clearing the list by default
+        let editingItem = null;        //   Needs to check if <li> Object element exists, If not it's null (Also null by default) 
+        let originalText = null;      //    null by default, when user types in some text, that text will be assigned to originalText
 
         const message = document.getElementById("errorMsg");
         const addToListBtn = document.getElementById("addBtn");
         const clearBtn = document.getElementById("clearBtn");
         const root = document.getElementById("root");
 
+        // Edit Mode
+        const editRow = document.getElementById("editRow");
+        const editInput = document.getElementById("editInput");
+        const updateBtn = document.getElementById("updateBtn");
+        const cancelBtn = document.getElementById("cancelBtn");
+
+        /**
+         * Displays a message on the page with the given color and text.
+         * 
+         * @param {string} colorName - The color to display the message in.
+         * @param {string} messageText - The text to display in the message.
+         */
         function showMsg(colorName, messageText){
             message.style.color = colorName;
             message.textContent = messageText;
             return;
         }
 
+        /**
+         * Resets the confirmClear state variable to false.
+         * This function is used after the user confirms clearing the list or cancels the clear list action.
+         */
         function resetClearState(){
             confirmClear = false;
             return;
+        }
+
+        /**
+         * Resets the previously edited <li> element to its original state.
+         * If there is no previously edited element, this function does nothing.
+         * 
+         * This function is used when the user clicks away from the edited <li> element,
+         * effectively cancelling the edit.
+         */
+        function restorePreviousItem(originalText){
+            // RESTORE previous state for editingItem
+            if(!editingItem) return;
+
+            // Restore the <li>'s visible text and styling
+                editingItem.textContent = originalText;
+                editingItem.title = "Edit/Delete";
+                editingItem.style.cursor = "pointer";
+
+                editRow.classList.add("hide-edit-mode");
+                editingItem = null;
+        }
+
+        /**
+         * Enables edit mode for the given <li> element.
+         * If the user is currently editing another <li> element, that element is restored to its original state.
+         * The given <li> element is then cleared of its visible text and the edit mode row is appended to it.
+         * The user is then shown a message indicating that they are now editing the given <li> element.
+         * The user's focus is set to the edit mode text input field.
+         * 
+         * @param {HTMLLIElement} item - The <li> element to enable edit mode for.
+         */
+        function enableEditMode(item){
+            if(item === editRow) return;
+
+            if(editingItem !== item){
+                restorePreviousItem(originalText);
+            }
+
+            originalText = item.textContent.trim();
+
+            item.textContent = "";
+
+            editInput.value = originalText;
+            editRow.classList.remove("hide-edit-mode");
+
+            item.appendChild(editRow);
+
+            showMsg("orange", `Editing: ${originalText}`);
+
+            editingItem = item;
+            editInput.focus();
         }
 
         addToListBtn.addEventListener("click", (event) => {
@@ -46,7 +126,7 @@
 
             const listItem = document.createElement('li');
             listItem.textContent = listItemName;
-            listItem.title = "Edit";
+            listItem.title = "Edit/Delete";
             listItem.style.cursor = "pointer";
             root.append(listItem);
 
@@ -69,6 +149,15 @@
             resetClearState();
             showMsg("green", "Cleared!");
             return;
+        });
+
+        root.addEventListener("click", (event) => {
+            const listItemClicked = event.target.closest('li');
+            if(!listItemClicked){
+                showMsg("red", `Nothing to edit: ${listItemClicked}`);
+                return;
+            }
+            enableEditMode(listItemClicked);
         });
     </script>
 </body>
