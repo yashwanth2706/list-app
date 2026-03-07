@@ -122,11 +122,10 @@
         }
 
         function exitDeleteMode() {
-            root.querySelectorAll('li[data-marked="true"]').forEach(li => {
+            root.querySelectorAll('li').forEach(li => {
                 li.dataset.marked = "false";
                 li.style.color = "black";
             });
-            root.style.color = "black";
             isInDeleteMode = false;
         }
 
@@ -149,7 +148,10 @@
             }
             isInDeleteMode = true;
             showMsg("red", "Now you can select items to delete: [ENABLED DELETE MODE]");
-            root.style.color = "orange";
+            root.querySelectorAll('li').forEach(li => {
+                li.dataset.marked = "false";
+                li.style.color = "purple";
+            });
         }
 
         addToListBtn.addEventListener("click", (event) => {
@@ -231,7 +233,7 @@
                 }
                 if (listItemClicked.dataset.marked === "true") {
                     listItemClicked.dataset.marked = "false";
-                    listItemClicked.style.color = "orange";
+                    listItemClicked.style.color = "purple";
                 } else {
                     listItemClicked.dataset.marked = "true";
                     listItemClicked.style.color = "red";
