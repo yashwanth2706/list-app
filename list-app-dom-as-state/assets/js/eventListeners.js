@@ -118,7 +118,7 @@ root.addEventListener("click", (event) => {
     return;
 });
 
-// CLEAR
+// CANCEL
 cancelBtn.addEventListener("click", () => {
     restorePreviousItem(originalText);
     showMsg("green", `Restored: ${originalText} - [CANCELED EDIT]`);
