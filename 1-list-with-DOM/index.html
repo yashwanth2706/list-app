@@ -165,6 +165,16 @@
             });
         }
 
+        function addItemToList(name){
+            const listItem = document.createElement('li');
+            listItem.textContent = name;
+            listItem.title = "Edit";
+            listItem.style.cursor = "pointer";
+            root.append(listItem);
+
+            document.getElementById("itemname").value = "";
+        }
+
         addToListBtn.addEventListener("click", (event) => {
 
             if(isInDeleteMode){
@@ -185,15 +195,27 @@
                 return;
             }
 
-            const listItem = document.createElement('li');
-            listItem.textContent = listItemName;
-            listItem.title = "Edit";
-            listItem.style.cursor = "pointer";
-            root.append(listItem);
+            // 1. Split the string into an array first
+            let listItemArray = listItemName.split(', ');
+            let cleanItem = "";
+            let count = 0;
 
-            showMsg("green", `Added Item: ${listItemName}`);
+            // 2. Loop through each item
+            for (let item of listItemArray) {
+                cleanItem = item.replace(/[^A-Za-z0-9 ]/g, "").trim();
 
-            document.getElementById("itemname").value = "";
+                // 3. Only add if the item isn't empty after cleaning
+                if (cleanItem.length > 0) {
+                    addItemToList(cleanItem);
+                    count++;
+                }
+            }
+
+            if(count === 1){
+                showMsg("green", `Added ${cleanItem}`);
+            } else {
+                showMsg("green", `Added +${count} item(s)`);
+            }
             return;
         });
 
