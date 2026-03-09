@@ -59,20 +59,20 @@ function confirmDeletion() {
         const marked = root.querySelectorAll('li[data-marked="true"]');
 
         if (marked.length === 0) {
-                showMsg("red", "No items selected: [EXIT DELETE MODE]");
+                showMsg("red", "No items selected: [DELETE MODE: EXITED]");
                 disableDeleteMode();
                 return;
         }
 
-        if(!confirmDelete) {
-                showMsg("blue", `sure to delete ${marked.length} items(s)? Click delete again to confirm!`);
-                confirmDelete = true;
+        if(!isConfirmDeleteActive()) {
+                showMsg("blue", `sure to delete ${marked.length} items(s)? Click delete again to confirm!/ Deselect all items to cancel!`);
+                setConfirmDelete();
                 return;
         }
 
-        if(confirmDelete) {
+        if(isConfirmDeleteActive()) {
                 marked.forEach(li => li.remove());
-                showMsg("red", `DELETED: ${marked.length} item(s) and EXIT DELETE MODE`);
+                showMsg("red", `DELETED: ${marked.length} item(s) and DELETE MODE: EXITED`);
                 disableDeleteMode();
                 return;
         }

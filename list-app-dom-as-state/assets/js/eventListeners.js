@@ -58,6 +58,7 @@ clearBtn.addEventListener("click", () => {
 
     if(isInDeleteMode) {
         showMsg("red", "Unable to enter clear state: [DELETE MODE ENABLED - EXIT DELETE MODE FIRST]");
+        resetConfirmDelete();
         return;
     }
 

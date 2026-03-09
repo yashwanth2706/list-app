@@ -78,3 +78,17 @@ function addItemToList(name) {
         resetInputField();
         return;
     }
+
+function resetConfirmDelete() {
+    confirmDelete = false;
+    return;
+}
+
+function setConfirmDelete() {
+    confirmDelete = true;
+    return;
+}
+
+function isConfirmDeleteActive() {
+    return confirmDelete;
+}
