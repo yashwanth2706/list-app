@@ -11,27 +11,6 @@ function showMsg(colorName, messageText) {
         return;
     }
 
-/**
- * Resets the confirmClear state variable to false.
- * This function is used after the user confirms clearing the list or cancels the clear list action.
- */
-function resetClearState(){
-        confirmClear = false;
-        return;
-    }
-
-function resetEditingItem() {
-        editingItem = null;
-        return;
-    }
-
-/**
- * Resets the previously edited <li> element to its original state.
- * If there is no previously edited element, this function does nothing.
- * 
- * This function is used when the user clicks away from the edited <li> element,
- * effectively cancelling the edit.
- */
 function restorePreviousItem(textToShow) {
         // RESTORE previous state for editingItem
         if(!editingItem) return;
@@ -52,15 +31,6 @@ function restorePreviousItem(textToShow) {
     }
 
 /**
- * Resets the value of the itemname input field to an empty string.
- * This function is used to clear the input field after adding a new item to the list.
- * itemname is DOM refference.
- */
-function resetInputField() {
-        itemname.value = "";
-    }
-
-/**
  * Adds a new <li> element to the main list container with the given text.
  * Sets the title attribute of the new <li> element to "Edit".
  * Sets the style cursor of the new <li> element to "pointer".
@@ -78,39 +48,3 @@ function addItemToList(name) {
         resetInputField();
         return;
     }
-
-function resetConfirmDelete() {
-    confirmDelete = false;
-    return;
-}
-
-function setConfirmDelete() {
-    confirmDelete = true;
-    return;
-}
-
-function isConfirmDeleteActive() {
-    return confirmDelete;
-}
-
-function setConfirmClear() {
-    confirmClear = true;
-    return;
-}
-
-function isConfirmClearActive() {
-    return confirmClear;
-}
-
-function setIsInEditMode() {
-    isInEditMode = true;
-    return;
-}
-
-function resetIsInEditMode() {
-    disableEditMode();
-}
-
-function isInEditModeActive() {
-    return isInEditMode;
-}
