@@ -11,15 +11,6 @@ function showMsg(colorName, messageText) {
         return;
     }
 
-/**
- * Resets the confirmClear state variable to false.
- * This function is used after the user confirms clearing the list or cancels the clear list action.
- */
-function resetClearState(){
-        confirmClear = false;
-        return;
-    }
-
 function resetEditingItem() {
         editingItem = null;
         return;
@@ -47,7 +38,7 @@ function restorePreviousItem(textToShow) {
         root.appendChild(editRow);
 
         resetEditingItem();
-        disableEditMode();
+        // disableEditMode();
         return;
     }
 
@@ -98,6 +89,15 @@ function setConfirmClear() {
     return;
 }
 
+/**
+ * Resets the confirmClear state variable to false.
+ * This function is used after the user confirms clearing the list or cancels the clear list action.
+ */
+function resetClearState(){
+        confirmClear = false;
+        return;
+    }
+
 function isConfirmClearActive() {
     return confirmClear;
 }
@@ -105,10 +105,6 @@ function isConfirmClearActive() {
 function setIsInEditMode() {
     isInEditMode = true;
     return;
-}
-
-function resetIsInEditMode() {
-    disableEditMode();
 }
 
 function isInEditModeActive() {
