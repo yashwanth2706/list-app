@@ -118,6 +118,13 @@ root.addEventListener("click", (event) => {
         enableEditMode(listItemClicked);
         return;
     }
+
+    if(isInEditModeActive()) {
+        restorePreviousItem(originalText);
+        enableEditMode(listItemClicked);
+        return;
+    }
+
     return;
 });
 
@@ -148,7 +155,12 @@ editBtn.addEventListener("click", () => {
 });
 
 // DELETE
-deleteBtn.addEventListener("click", (event) => {
+deleteBtn.addEventListener("click", () => {
+
+    if(isInEditModeActive()) {
+        showMsg("red", `Complete cancel/edit for [${editInput.value}] and try again, [CANNOT ENTER DELETE MODE]`);
+        return;
+    }
             
     if(!isInDeleteMode) {
         enableDeleteMode();
