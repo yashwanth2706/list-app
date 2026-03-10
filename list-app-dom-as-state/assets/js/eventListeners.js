@@ -1,8 +1,7 @@
 // ADD to List
 addToListBtn.addEventListener("click", () => {
 
-    if(isInDeleteMode){
-        isInDeleteMode = false;
+    if(isInDeleteModeActive()){
         disableDeleteMode();
         showMsg("green", "DELETE MODE: EXITED");
         return;
@@ -10,7 +9,7 @@ addToListBtn.addEventListener("click", () => {
 
     const listItemName = itemname.value.trim();
 
-    if(confirmClear){
+    if(isConfirmClearActive()){
         resetClearState();
     }
 
@@ -57,7 +56,7 @@ clearBtn.addEventListener("click", () => {
         return;
     }
 
-    if(isInDeleteMode) {
+    if(isInDeleteModeActive()) {
         showMsg("red", "Unable to enter clear state: [DELETE MODE ENABLED - EXIT DELETE MODE FIRST]");
         resetConfirmDelete();
         return;
@@ -68,7 +67,7 @@ clearBtn.addEventListener("click", () => {
         return;
     }
 
-    if(!confirmClear) {
+    if(!isConfirmClearActive()) {
         showMsg("blue", "Are you sure to clear the list? (Click again to proceed!)");
         setConfirmClear();
         return;

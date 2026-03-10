@@ -61,3 +61,7 @@ function textStoredInListItem() {
 function inputTextInEditMode() {
     return editInput.value;
 }
+
+function isInDeleteModeActive() {
+    return isInDeleteMode;
+}
