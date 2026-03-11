@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+
+    <!-- JS -->
+    <script defer src="./assets/js/state.js"></script>
+</head>
+<body>
+    <link rel="stylesheet" href="./assets/css/edit-mode.css">
+    Add to list:
+    <span id="errorMsg"></span><br><br>
+    <input id="itemname" type="text" name="text" placeholder="Add to list">
+    <input id="addBtn" title="Add item to list" type="button" name="addBtn" value="Add">
+    <input id="clearBtn" title="Clear list" type="button" name="clearBtn" value="Clear">
+    <button id="deleteBtn" title="Enter Delete Mode">Delete</button>
+    <ol id="root">
+        <span id="editRow" class="hide-edit-mode">
+            <input id="editInput" type="text" name="editModeTextField">
+            <button id="editBtn" title="Edit Item">Edit</button>
+            <button id="cancelBtn" title="Cancel edit action">Cancel</button>
+        </span>
+    </ol>
+</body>
+</html>
