@@ -1,0 +1,10 @@
+const message = document.getElementById("errorMsg");    // inline status feedback
+const addToListBtn = document.getElementById("addBtn");
+const clearBtn = document.getElementById("clearBtn");
+const root = document.getElementById("root");           // <ol> — main list container
+const itemname = document.getElementById("itemname");
+const editRow = document.getElementById("editRow");     // visible only during edit mode
+const editInput = document.getElementById("editInput");
+const editBtn = document.getElementById("editBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+const deleteBtn = document.getElementById("deleteBtn");
