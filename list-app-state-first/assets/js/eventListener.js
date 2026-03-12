@@ -169,6 +169,11 @@ editBtn.addEventListener("click", () => {
 // DELETE
 deleteBtn.addEventListener("click", () => {
 
+    // Reset clear state before enabling delete mode.
+    if (appState.confirmClear) {
+        dispatch({type: "RESET_CLEAR"});
+    }
+
     // Cannot enter delete mode while editing.
     if (appState.isInEditMode) {
         showMsg("blue", `Complete cancel/edit for [${appState.originalText}] (to) => [${editInput.value}] and try again, [CANNOT ENTER DELETE MODE]`);
