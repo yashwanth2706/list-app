@@ -53,23 +53,32 @@ function render(prevState, currState) {
 function renderList(prevState, currState) {
     if (JSON.stringify(prevState.items) === JSON.stringify(currState.items)) return;
 
-    // Detach editRow before wiping root so it isn't destroyed
-    if (currState.isInEditMode) {
-        root.appendChild(editRow);
-    }
-
-    // Remove all existing <li> elements
-    root.querySelectorAll('li').forEach(li => li.remove());
-
-    // Rebuild <li> elements from state
-    currState.items.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item.text;
-        li.dataset.id = item.id;
-        li.title = "Edit";
-        li.style.cursor = "pointer";
-        root.appendChild(li);
+    const existingElements = new Map();
+    root.querySelectorAll('li').forEach(li => {
+        existingElements.set(li.dataset.id, li);
     });
+
+    currState.items.forEach(item => {
+        if (existingElements.has(item.id)) {
+            // Item already exists — only update text if it changed
+            const li = existingElements.get(item.id);
+            if (li.textContent !== item.text) {
+                li.textContent = item.text;
+            }
+            existingElements.delete(item.id); // mark as still alive
+        } else {
+            // New item — create and append
+            const li = document.createElement('li');
+            li.textContent = item.text;
+            li.dataset.id = item.id;
+            li.title = "Edit";
+            li.style.cursor = "pointer";
+            root.appendChild(li);
+        }
+    });
+
+    // Anything left in the map no longer exists in state — remove it
+    existingElements.forEach(li => li.remove());
 }
 
 // ─── 2. EDIT MODE ────────────────────────────────────────────────────────────
